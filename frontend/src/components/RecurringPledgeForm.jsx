@@ -217,7 +217,6 @@ export default function RecurringPledgeForm({ campaignId, asset, walletType, onS
   }
 
   async function confirmPledgeFreighter() {
-    let subscription = null;
     try {
       const prepared = await api.prepareSubscription(campaignId, {
         amountPerPeriod: amount,
@@ -244,7 +243,7 @@ export default function RecurringPledgeForm({ campaignId, asset, walletType, onS
       if (signed?.error) throw new Error(signed.error?.message || 'Freighter signing failed');
       if (!signed?.signedTxXdr) throw new Error('Freighter did not return a signed transaction');
 
-      subscription = await api.submitSubscription(campaignId, {
+      const subscription = await api.submitSubscription(campaignId, {
         unsignedXdr: prepared.unsignedXdr,
         signedXdr: signed.signedTxXdr,
         amountPerPeriod: amount,
@@ -253,6 +252,10 @@ export default function RecurringPledgeForm({ campaignId, asset, walletType, onS
         totalPeriods,
       });
       setCreated(subscription);
+      setShowConfirm(false);
+      setOpen(false);
+      setAmountPerPeriod('');
+      onSubscribed?.(subscription);
     } catch (err) {
       if (err?.message && err.message.includes('expired')) {
         setError('This transaction has expired. Please request a new quote.');
@@ -261,12 +264,6 @@ export default function RecurringPledgeForm({ campaignId, asset, walletType, onS
       } else {
         setError(err.message || 'Freighter signing failed');
       }
-    }
-    setShowConfirm(false);
-    setOpen(false);
-    setAmountPerPeriod('');
-    if (subscription) {
-      onSubscribed?.(subscription);
     }
   }
 
