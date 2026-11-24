@@ -527,7 +527,7 @@ export default function ContributeModal({
     // Check if the prepared transaction is expired
     if (prepared.timeBounds && new Date(prepared.timeBounds.maxTime * 1000) < new Date()) {
       throw new Error(
-        'This transaction has expired. Please <button className="link-btn" onClick={() => setPhase("rebuild")}>rebuild the quote</button> ' +
+        'This transaction has expired. Please <button type="button" className="link-btn" onClick={() => setPhase("rebuild")}>rebuild the quote</button> ' +
           'or refresh the page to generate a new quote for the current network.'
       );
     }

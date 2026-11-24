@@ -135,6 +135,7 @@ export default function PoolManager({ campaignId, campaignTitle }) {
           {t('poolManager.contributionPools')}
         </h3>
         <button
+          type="button"
           onClick={() => setShowCreateForm(!showCreateForm)}
           className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 text-sm font-medium"
         >
@@ -272,6 +273,7 @@ export default function PoolManager({ campaignId, campaignTitle }) {
                           />
                         </div>
                         <button
+                          type="button"
                           onClick={() => handleJoinPool(pool.id)}
                           disabled={joining}
                           className="px-3 py-1.5 bg-indigo-600 text-white rounded text-sm hover:bg-indigo-700 disabled:opacity-50"
@@ -279,6 +281,7 @@ export default function PoolManager({ campaignId, campaignTitle }) {
                           {joining ? t('poolManager.joining') : t('poolManager.confirm')}
                         </button>
                         <button
+                          type="button"
                           onClick={() => {
                             setJoinPoolId(null);
                             setJoinAmount('');
@@ -290,6 +293,7 @@ export default function PoolManager({ campaignId, campaignTitle }) {
                       </div>
                     ) : (
                       <button
+                        type="button"
                         onClick={() => setJoinPoolId(pool.id)}
                         className="px-3 py-1.5 bg-indigo-100 text-indigo-700 rounded text-sm hover:bg-indigo-200"
                       >
@@ -298,6 +302,7 @@ export default function PoolManager({ campaignId, campaignTitle }) {
                     ))}
                   {canSubmit && (
                     <button
+                      type="button"
                       onClick={() => handleSubmitPool(pool)}
                       className="px-3 py-1.5 bg-green-600 text-white rounded text-sm hover:bg-green-700"
                     >
@@ -306,6 +311,7 @@ export default function PoolManager({ campaignId, campaignTitle }) {
                   )}
                   {isLeader && pool.status === 'open' && (
                     <button
+                      type="button"
                       onClick={() => handleLeavePool(pool.id)}
                       className="px-3 py-1.5 text-red-600 text-sm hover:bg-red-50 rounded"
                     >
