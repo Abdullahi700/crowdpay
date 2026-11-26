@@ -92,6 +92,12 @@ jobs:
             exit 1
           fi
 
+      - name: Unit test migration prefix check
+        run: node --test scripts/check-migration-prefixes.test.js
+
+      - name: Enforce unique timestamped migration prefixes
+        run: node scripts/check-migration-prefixes.js
+
       - name: Run migrations
         working-directory: ./backend
         env:
@@ -200,6 +206,9 @@ jobs:
         run: |
           npm run migrate
           psql -h localhost -U postgres -d crowdpay_test -f db/seed.sql
+
+      - name: Unit test the performance budget checker
+        run: node --test load-tests/__tests__/budget-check.test.js
 
       - name: Validate performance budgets and exceptions
         run: node load-tests/budget-check.js --validate
